@@ -1,5 +1,5 @@
-# Lab Name
-eThaler
+# eThaler
+
 
 # Short Description
 Model a sample CBDC  in TTF and implement in Besu   
@@ -16,9 +16,11 @@ Implement the interfaces and opther properties in Besu using an implementation s
 # Initial Committers
 
 https://github.com/petermetz - Peter Somogyvari Accenture
-https://github.com/kelly-cotton - Kelly Cotton Educator
-https://github.com/vipinsun - dlt.nyc
+https://github.com/kelly-cooper - Kelly Cooper Educator
+https://github.com/vipinsun - Vipin Bharathan dlt.nyc
 https://github.com/mmani99 - Mani Pillai Swapshub
+https://github.com/xragrawal - Ravikant Agrawal Infosys
+https://github.com/junjikatto - Junji Katto Itau bank
 
 # Sponsor
 
