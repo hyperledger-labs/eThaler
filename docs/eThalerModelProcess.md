@@ -71,10 +71,78 @@ u = Unique Transferable The unique transferable behavior provides the owner the 
 *Token Unit- definitely needs to be fractional. Value type is Intrinsic. Representation type can be either common or unique tokens (this is our main conundrum for eThaler). Template Type can be single, but if we follow a hybrid rule then we can have common token* 
 
 
-# Revised formula for eThaler
-This should be our output from today.
+# eThalerWS functional specification
 
-# Roles
+## Why eThaler
+There are many CBDC projects under way. eThaler addresses many of the same functions. The main differentiators are:
+- We are starting from a standard (TTF) and progressing to an implementation in Besu, also following a token standard.
+- Completely open source
+- Following the Fedcash protocol closely, however limiting the PoC to just the depositary institutions with a Fed account
+- These institutions can instantaneously settle in eThaler with each other without counterparty risk or settling through the medium of the Fed.
+- There will be reduced risk under the following categories.
+
+## Functional Requirements
+
+Although mimicking the physical cash system in its minting and distribution, eThalerWS is targeted at the interbank payment system. It is expected to interact with the future [payment system planned by the Fed](https://www.frbservices.org/financial-services/fednow/index.html "FedNow"). Details of this interaction cannot be known at this time. Such a recirculating wholesale CBDC can also ease the pressure on the demands on any payment system developed by the Fed. The settlement can be instantaneous and happen between the settling peers.
+
+The FED mints eThalerWS (physical plants like the Bureau of Printing and Engraving or the US Mint are not needed) and stores eThalerWS in the Fed's own accounts. They can also burn eThalerWS, controlling the wholesale CBDC available for settlement.
+
+Upon request from an institution with sufficient reserves, the Fed transfers the eThalerWS to the Wallet of the requesting institution (Bank P1). A corresponding amount is moved from Bank P1's reserve account into the Fed's account. If Bank P1 needs to pay another bank (Bank P2) for a transaction executed elsewhere, on any transaction system; Bank P2 is paid from the eThalerWS wallet of Bank P1. Bank P2 can subsequently pay another bank with this eThalerWS. The inter bank payments become a peer-to-peer system with no round trip to the Fed for each payment. Once any bank who now has the eThalerWS can optionally send the money back to the Fed and get its reserve account credited. 
+
+In its first avatar, eThaler is a wholesale token to be exchanged between banks; next it needs to be expanded to retail, first via institutions to its account holders.  
+
+## Roles
+Since the implementation is on Besu, we use Role Based Access Control through openly available Open Zeppelin code.
+
+For phase1 the following roles are available:
+
+The Federal Reserve Bank (although there are 12 branches, represented by a single role in eThalerWS, in real life there many users)
+
+38 % of Americas 8000 banks, bank holding companies have accounts at the Fed. All nationally chartered banks have accounts. In addition foreign banks also have accounts.
+
+We represent these with 6 roles. Two for nationally charted banks two for state chartered banks and two more for FMUs.
+
+
+FMUs (Financial Market Utilities)
+    - The Clearing House Payments Company, L.L.C., on the basis of its role as operator of the Clearing House Interbank Payments System - (Board);
+    - CLS Bank International - (Board);
+    - Chicago Mercantile Exchange, Inc. - (Commodity Futures Trading Commission (CFTC));
+    - The Depository Trust Company - (Securities and Exchange Commission (SEC));
+    - Fixed Income Clearing Corporation - (SEC);
+    - ICE Clear Credit L.L.C. - (CFTC);
+    - National Securities Clearing Corporation - (SEC); and
+    - The Options Clearing Corporation - (SEC).
+
+
+## eThaler classification
+Fractional Token with an Intrinsic Value Type, representation type is common with a single template type. 
+
+
+## Roles
 - the FED
-- the Mint (needed?)
-- the Institutions with a Fed Window Deposit
+- the Mint (optional)
+- the Institutions with a Fed Window Account
+
+## eThalerWS Formula
+We will call this **eThalerWS** for eThaler Wholesale.
+After discussions on Feb 28, 2020 we settled on the following simplified token formula: **tF{d,t,c,p,SC}**
+where SC={m,b,r}
+This is still draft, comments and suggestions are welcome. We need input from the community. The aim was to produce 
+
+To restate:
+
+d= Divisible An ability for any eThalerWS to be divided into fractions, which are represented as decimal places. Any value greater than 0 will indicate how many fractions are possible where the smallest fraction is also the smallest ownable unit of the token. in our case this will be 100, since it mirrors dollars.
+
+t= Transferable Every eThalerWS instance has an owner. The Transferable behavior provides the owner the ability to transfer the ownership to another party or account. Role restricted to the peers set up _Not delegable._
+
+c= Compliant eThalerWS needs to comply with legal requirements, transfers between banks needs the regulator to have transparency into the reason. Hence a proof in the form of a signed transaction ID should be deposited from both the sender and receiver and they have to tally. A compliant token fulfills all legal requirements **on-chain** without interaction from an off-chain entity.
+
+m = Mintable eThalerWS implements this behavior will support the minting or issuing of new token instances in the class. These new tokens can be minted and belong to the FED, the only role that can mint tokens, these tokens have to minted to the FED account.  
+
+b = eThalerWS will be Burnable. This behavior will support the burning or decommissioning of token instances of the class. This does not delete a token, but rather places it in a permanent non-use state.  Burning is a one way operation and cannot be reversed. This can only be done from the FED account by the FED role.
+
+r = Roles A token can have behaviors that the class will restrict invocations to a select set of parties or accounts that are members of a role or group.  This is a generic behavior that can apply to a token many times to represent many role definitions within the template. This behavior will allow you to define what role(s) to create and what behavior(s) to apply the role to in the TemplateDefinition. Many of the role vs. behavior interactions are given above.  
+
+
+
+
