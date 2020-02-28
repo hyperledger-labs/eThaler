@@ -17,7 +17,7 @@ Implement the interfaces and opther properties in Besu using an implementation s
 
 The method is to develop a model using a TTF driven process. This will be used to develop a number of artifacts, which can then be driven to an EIP 1155 compatible token.
 
-[Reference to the eThaler process file](../master/docs/eThalerModel.md "Model process file")
+[Reference to the eThaler process file](../master/docs/eThalerModelProcess.md "Model process file")
 
 # Initial Committers
 
