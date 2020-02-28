@@ -17,6 +17,5 @@
     Riksbank, e-Krona project report 2, https://www.riksbank.se/en-gb/payments--cash/e-krona/e-krona-reports/e-krona-project-report-2/ more elaborate in pdf form.
 
     Tobias Adrian, 2019 at the IMF-Swiss National Bank Conference, Zurich, May 2019. “Stablecoins, Central Bank Digital 
-    
     Currencies, and Cross-Border Payments: A New Look at the International Monetary System” https://www.imf.org/en/News/Articles/2019/05/13/sp051419-stablecoins-central-bank-digital-currencies-and-cross-border-payments
 
