@@ -64,7 +64,7 @@ u = Unique Transferable The unique transferable behavior provides the owner the 
 *Seems like a fairly straightforward description of UTXO a la bit coin with some minor differences- still does not jell with SKU and other features*
 
 # Property Sets
-*This boils down to whether eThaler is a unique token (like dollar bills) or just a fungible token, many other behaviors are influenced by this If needed we use a number like a SKU (or a serial number), then how do we make change? This relates to the property u referenced above*
+*This boils down to whether eThaler is a unique token (like dollar bills) or just a fungible token, many other behaviors are influenced by this. If Unique we need to use a number like a SKU (or a serial number), then how do we make change? This relates to the property u referenced above*
 
 # Token Classification 
 
@@ -72,6 +72,7 @@ u = Unique Transferable The unique transferable behavior provides the owner the 
 
 
 # Revised formula for eThaler
+This should be our output from today.
 
 # Roles
 - the FED
