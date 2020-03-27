@@ -13,7 +13,7 @@ The KYC/AML is assumed to have been done since the institutions are all the ones
 # Token Base
 
 The choices we have are a. Fractional Fungible or b.Unique Fractional Fungible
-For this use case my choice is Fractional Fungible.
+For this use case our choice is Fractional Fungible.
 
 From the base descriptions in TTF we have:
 
@@ -26,7 +26,7 @@ _Physical cash has serial numbers, so they are unique fractional fungible, excep
 # Behaviors & Behavior Groups
 
 The formulae that came up during the workshop are similar to the one for eMoney, we had some other attributes like loggable etc.
-
+ 
 Workshop guide: tF{d,t,g,h,c,SC} is Emoney
 Unpacking we have: It is a fungible token
 
