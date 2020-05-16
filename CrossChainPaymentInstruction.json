@@ -1,0 +1,43 @@
+ {
+    "_comment": "CrossChainPaymentInstruction",
+    "crossChainPaymentInstruction": {
+        "Header": {
+            "_comment": "Header describes message. is this needed?",
+            "messageType": "CCPI",
+            "messageSign":"DigitalSignature from Origin"
+        },
+        "fromChain": {
+            "name": "name of chain in CNS or Chain Name Service",
+            "transactionID": "TransactionID",
+            "referenceContract": {
+                "_comment": "This may not be needed",
+                "contractType": "DLPC",
+                "contractID": "uniquecontractid- can be DLPCID"
+            }
+        },
+        "Payment": {
+            "amount": "numeric payment amount",
+            "currency": "USD:ISO Code"
+        },
+        "payor": {
+            "payorId": {
+                "type": "nameaddress, LEI",
+                "id": "string representing payorID"
+            },
+            "from": {
+                "type": "ACH, Stablecoin or CDBDCName",
+                "account": "Account number- routing number, IBAN, chain name in CNS"
+            }
+        },
+        "payee": {
+            "payeeId": {
+                "type": "nameaddress, LEI, DUNS",
+                "id": "string representing payorID"
+            },
+            "to": {
+                "type": "ACH, Stablecoin or CDBDCName",
+                "to": "Account number- routing number, IBAN, chain name in CNS"
+            }
+        }
+    }
+}
