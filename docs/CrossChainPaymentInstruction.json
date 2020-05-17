@@ -15,9 +15,10 @@
                 "contractID": "uniquecontractid- can be DLPCID"
             }
         },
-        "Payment": {
+        "payment": {
             "amount": "numeric payment amount",
-            "currency": "USD:ISO Code"
+            "currency": "ISO Code",
+            "paymentDate": "yyyymmdd"
         },
         "payor": {
             "payorId": {
@@ -25,8 +26,10 @@
                 "id": "string representing payorID"
             },
             "from": {
+                "_comment" : "payor bank details are discoverable thru account",
                 "type": "ACH, Stablecoin or CDBDCName",
-                "account": "Account number- routing number, IBAN, chain name in CNS"
+                "account": "Account number- routing number, IBAN, chain name in CNS",
+                
             }
         },
         "payee": {
@@ -35,8 +38,9 @@
                 "id": "string representing payorID"
             },
             "to": {
+                "_comment" : "payee bank details are discoverable thru account or do details",
                 "type": "ACH, Stablecoin or CDBDCName",
-                "to": "Account number- routing number, IBAN, chain name in CNS"
+                "account": "Account number- routing number, IBAN, chain name in CNS"
             }
         }
     }
