@@ -1,0 +1,26 @@
+ {
+    "_comment": "CrossChainSettlementInstructionResponse",
+    "crossChainSettlementInstructionResponse": {
+        "Header": {
+            "_comment": "Header describes message",
+            "messageType": "XCSIR",
+            "messageID": "UUID of this message",
+            "reference": "UUID of XCSI",
+            "messageTimeStamp":"messageTime in epoch time to millisecond",
+            "messageSign":"DigitalSignature from attestor"
+        },
+        "from": {
+            "name": "settlement venue: name of chain in CNS or Chain Name Service or some other venue",
+            "transactionID": "TransactionID from chain",
+            "referenceContract": {
+                "contractType": "DLPC|CDM|Other types",
+                "contractID": "uniquecontractid- can be DLPCID|CDMID- this has to match the one in XCSI"
+            }
+        },
+        "result": {
+            "resultCode": "SUCCESS|ERROR|STATUS",
+            "resultDetail": "resultDetail in a string",
+            "resultDate": "yyyymmdd"
+        }
+    }
+}
