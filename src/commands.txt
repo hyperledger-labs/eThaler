@@ -1,0 +1,64 @@
+# get the predefined accounts
+let accounts=await web3.eth.getAccounts()
+# check account address
+accounts[0].toString()
+
+# get the deployed contract instance
+let instance=await eThaler.deployed()
+
+instance.addNewTokenDefinition( 1, 'USD', 4, 'http://hyperledger.org/SIG/capitalMarkets/usd.pdf' )
+
+instance.getTokenName( 1 )
+instance.getDecimals( 1 )
+instance.getTTF_URL( 1 )
+
+instance.addNewTokenDefinition( 2, 'GBP', 2, 'http://hyperledger.org/SIG/capitalMarkets/gbp.pdf' )
+
+instance.getAllTokenIds( )
+ 
+instance.mint( 1, 1000000, '0x00' )
+
+# first register the CB/Minter
+instance.registerDealer( accounts[0], 1 )
+
+# find the balance of acct0 for tokenId 1
+instance.balanceOf( accounts[0], 1 )
+
+# first register a dealer 
+instance.registerDealer( accounts[1], 1 )
+
+# dealer depositing collateral and getting appropriate token allocation
+# CB transfers tokens to dealer
+instance.transfer( accounts[1], 1, 100 )
+
+instance.registerDealer( accounts[2], 1 )
+# xfer 20 tokens of tokenId 1 from acct1 to acct2 using specific accounts[1]
+# use a specific address (works only with truffle in development)
+# from option only works with truffle console attached to truffle or ganache
+# (will not work in besu as besu requires proper authentication based on private key)
+instance.transfer( accounts[2], 1, 20, {from: accounts[1]} )
+
+# from CB perspective
+instance.balanceOf( accounts[0], 1 )
+instance.balanceOf( accounts[1], 1 )
+
+# from dealer1 perspective (the first will work as its own account. the second
+won't
+instance.balanceOf( accounts[1], 1, {from: accounts[1]} )
+instance.balanceOf( accounts[0], 1, {from: accounts[1]} )
+
+# pause the token by owner. Thereafter mint, burn and trnasfer should not be
+# permitted for this token until resumeToken is processed
+instance.pause( 1 ) 
+instance.isPaused( 1 )
+
+instance.resume( 1 )
+
+# dealer surrendering tokens and getting appropriate collateral back
+instance.transfer( accounts[0], 1, 50 )
+
+
+# other useful commands to check ether balance
+web3.eth.getBalance( accounts[0] )
+
+
