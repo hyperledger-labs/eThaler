@@ -7,18 +7,18 @@ Prerequisities
 
 Getting the software and Preparing 
 
-1. Checkout the folder "eThalerClient" from eThaler project in github 
+1. Get "eThaler" project in github .
 
-2. Navigate into the foldler "eThalerClient".
+2. Navigate into the foldler "eThaler/src/CLI".
 
 3. Execute the "PrepareeThalerClient.bat" (Windows ) or "PrepareeThalerClient.sh" (Linux)
-    (This builds, copies and creates required script files)
+    (This builds, copies and creates required script files for running the CLI application)
 
 
 Configuring / Resource needed to run the application.
 
 1. "config" directory  contains "config.properties" file. 
-        Two properties in this file need to be modified as per the env
+        Two properties in this file need to be modified as per the target env
 	i. BESU_URL=<URL for network>
        ii. ETHALER_CONTRACT_ADDR=<contract address>
 
@@ -27,21 +27,21 @@ Configuring / Resource needed to run the application.
 
 To create Wallets
 
-1. To create wallet for Central Banker , run "StarteThalerClient.sh createwallet"
+1. To create wallet for Central Banker , run "StarteThalerClient.sh createwallet" from "eThaler/src/CLI" folder
      This will prompt to provide 
       a. wallet name 
       b. wallet password
       c. private key used to deploy contract to network
 
-2. To create wallet for dealers , run "StarteThalerClient.sh"
+2. To create wallet for dealers , run "StarteThalerClient.sh" from "eThaler/src/CLI" folder
      This would give 3 options.
      Choose option "2 Create brand new wallet"
      Give wallet name and password.
-     Note the wallet account "address" displayed in the console.
+     Note the wallet account "address" displayed in the console for future use.
 
 Running :
 
-1.  Execute the "StarteThalerClient.bat" (Windows) or "StarteThalerClient.sh" (Linux) file
+1.  Execute the "StarteThalerClient.bat" (Windows) or "StarteThalerClient.sh" (Linux) file from "eThaler/src/CLI" folder
      This starts the eThalerClient java CLI application.
 
 2. Choose the option "1. Open existing wallet"
