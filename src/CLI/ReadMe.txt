@@ -2,9 +2,11 @@ ReadMe for Running eThalerClient application
 
 Prerequisities
 
-1. Ensure Gradle (vesion 6.3) is installed .
 
 
+1. Ensure your java version is 1.8 (for the uninitiated it is Java 8) is installed .
+
+Gradle 5.1.3 the build tool for 
 Getting the software and Preparing 
 
 1. Get "eThaler" project in github .
