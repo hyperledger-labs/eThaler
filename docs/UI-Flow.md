@@ -1,8 +1,10 @@
 UI-suggestions
-UI should be driven by
+UI should be driven by the underlying functions
+
 A note on types:
 1. address (basic Ethereum type 20 byte address link= https://solidity.readthedocs.io/en/v0.6.9/types.html?highlight=address#address )
 2. uint256 for tokenId and amount
+
 
 I. Offer choice about wallets
     a. open existing wallet 
@@ -11,7 +13,7 @@ I. Offer choice about wallets
 a. open existing wallet (next screen)
     If you open the Central Bank wallet
 
-If You are the Central Bank User Offer a screen with following tabs
+A. If You are the Central Bank User Offer a screen with following tabs
 
  Tabs: 
  Query|Token Supply|Transfer|Admin|Exit
@@ -54,7 +56,7 @@ Admin
         #can only be called after pause
         tokenId
 
-If You are a Dealer
+B. If You are a Dealer
 
 Tabs 
 Query|Transfer|Exit
