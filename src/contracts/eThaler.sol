@@ -9,8 +9,8 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 pragma solidity >=0.4.21 <0.7.0;
 
-import "node_modules/openzeppelin-solidity/contracts/access/Roles.sol"; //added node_modules/ VB question
-import "node_modules/openzeppelin-solidity/contracts/token/ERC1155/ERC1155.sol";
+import "openzeppelin-solidity/contracts/access/Roles.sol"; 
+import "openzeppelin-solidity/contracts/token/ERC1155/ERC1155.sol";
 
 contract eThaler is ERC1155 {
 	address public owner;	  // owner of this contract (Central Bank)
