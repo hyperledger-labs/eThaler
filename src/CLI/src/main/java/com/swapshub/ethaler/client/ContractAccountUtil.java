@@ -135,13 +135,13 @@ public class ContractAccountUtil extends GenUtil {
             System.out.print("Enter amount to transfer : ");
             String amt = collectUserInput();
             BigInteger convertedAmt = this.getConvertedValForNetwork(new BigInteger(tokenId), new BigInteger(amt));
-            int beforeOwnBal = contract.balanceOf(new BigInteger(tokenId)).send().intValue();
+            BigInteger beforeOwnBal = contract.balanceOf(new BigInteger(tokenId)).send();
             TransactionReceipt receipt = contract.transfer(acctAdd, new BigInteger(tokenId), convertedAmt).send();
             printLog("Amount : " + amt + " transferred to account address [" + acctAdd);
             printTransactionHash(receipt);
-            int afterOwnBal = contract.balanceOf(new BigInteger(tokenId)).send().intValue();
+            BigInteger afterOwnBal = contract.balanceOf(new BigInteger(tokenId)).send();
             System.out.println("Transfer --  Balance for account [" + WalletInitUtil.acctAddress + "] : Before ["
-                    + getConvertedValForDisplay(new BigInteger(tokenId), new BigInteger("" + beforeOwnBal)) + "] :: After [" + getConvertedValForDisplay(new BigInteger(tokenId), new BigInteger("" + afterOwnBal)) + "]");
+                    + getConvertedValForDisplay(new BigInteger(tokenId),  beforeOwnBal) + "] :: After [" + getConvertedValForDisplay(new BigInteger(tokenId), afterOwnBal) + "]");
         }
     }
 
