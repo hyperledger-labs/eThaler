@@ -26,6 +26,9 @@ public class EThalerApplication {
     static String LOG_LEVEL = "INFO";
     static String BESU_URL = "";
     static String ETHALER_CONTRACT_ADDR = "";
+    static int CHAIN_ID = 2018;
+    static long POLLING_INTERVAL = 2000;
+    static int  POLLING_ATTEMPTS = 5;
     static String configDirectory = "config";
     static String walletDirectory = "wallets";
     static Scanner scanner = new Scanner(System.in);

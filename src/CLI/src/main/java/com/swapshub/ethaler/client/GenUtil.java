@@ -197,6 +197,9 @@ public class GenUtil {
             EThalerApplication.BESU_URL = getProperty("BESU_URL", "http://127.0.0.1:9545");
             EThalerApplication.ETHALER_CONTRACT_ADDR = getProperty("ETHALER_CONTRACT_ADDR", "0x1a21603d62d0718e5210634BAD9e7Fe711634215");
             EThalerApplication.LOG_LEVEL = getProperty("LOG_LEVEL", "INFO").toUpperCase();
+            EThalerApplication.CHAIN_ID = Integer.parseInt(getProperty("CHAIN_ID", "2018"));
+            EThalerApplication.POLLING_ATTEMPTS = Integer.parseInt(getProperty("POLLING_ATTEMPTS", "5"));
+            EThalerApplication.POLLING_INTERVAL = Long.parseLong(getProperty("POLLING_INTERVAL", "2000"));
         } catch (Exception ex) {
             printLog("Error in loading properties : " + ex.getMessage());
         }
