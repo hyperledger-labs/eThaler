@@ -15,6 +15,8 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.*;
 import org.web3j.protocol.exceptions.TransactionException;
+import org.web3j.tx.TransactionManager;
+import org.web3j.tx.RawTransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
@@ -452,12 +454,22 @@ public class ContractAccountUtil extends GenUtil {
      * @return EThaler contract object
      * @throws Exception
      */
-    private EThaler createEThalerContract(Web3j web3j, String contractAddr, String accountPrivateKey) throws Exception {
+    private EThaler createEThalerContract_old(Web3j web3j, String contractAddr, String accountPrivateKey) throws Exception {
         Credentials credentials = Credentials.create(accountPrivateKey);
         ContractGasProvider contractGasProvider = getGasProvider();
         return EThaler.load(contractAddr, web3j, credentials, contractGasProvider);
     }
 
+    private EThaler createEThalerContract(Web3j web3j, String contractAddr, String accountPrivateKey) throws Exception {
+        Credentials credentials = Credentials.create(accountPrivateKey);
+        ContractGasProvider contractGasProvider = getGasProvider();
+        TransactionManager rawTransMgr = getRawTransactionManager(web3j , credentials , EThalerApplication.CHAIN_ID , EThalerApplication.POLLING_ATTEMPTS , EThalerApplication.POLLING_INTERVAL);
+        return EThaler.load(contractAddr , web3j ,rawTransMgr , contractGasProvider);
+    }
+    private TransactionManager getRawTransactionManager(Web3j web3j, Credentials credentials, long chainId, int attempts, long sleepDuration)
+    {
+        return new  RawTransactionManager(web3j , credentials, chainId , attempts , sleepDuration);
+    }
     /**
      * To pass zero gas price
      *
