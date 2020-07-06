@@ -40,7 +40,8 @@ Query Each one is driven off a list of Token Ids (which can be looked up)
 Token Supply
         Mint
             Token Id (1)
-            Amount (1000000) //amount can accept (1,000,000) but must send it as an amount to underlying web3
+            Amount (1000000) 
+            //amount can accept (1,000,000) but must send it as an amount underlying web3
         Burn
             Token Id (1)
             Amount (1000000)
@@ -60,8 +61,10 @@ Admin
             Dealer (0x9535fB57245ea162027449b39be10Ce32aa59e76)
 
     Add Token Definition
-            Token Id (1) //should not clash with any existing TID
-		    string name ("eGBP")- todo make it unique
+            Token Id (1) 
+            //should not clash with any existing TID
+		    string name ("eGBP")
+            //- todo make it unique
 		    decimals (2) 
 		    url = (http://example.com/example.pdf) 
 
