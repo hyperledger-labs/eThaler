@@ -9,23 +9,29 @@ http://www.apache.org/licenses/LICENSE-2.0
 package com.swapshub.ethaler.client;
 
 import com.swapshub.ethaler.w3generated.EThaler;
-import javafx.scene.chart.StackedAreaChart;
-import org.web3j.crypto.*;
+import org.web3j.abi.FunctionEncoder;
+import org.web3j.abi.FunctionReturnDecoder;
+import org.web3j.abi.TypeReference;
+import org.web3j.abi.datatypes.Type;
+import org.web3j.abi.datatypes.generated.Bytes32;
+import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.response.*;
+import org.web3j.protocol.core.methods.response.EthCall;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.exceptions.TransactionException;
-import org.web3j.tx.TransactionManager;
 import org.web3j.tx.RawTransactionManager;
+import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Numeric;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
 * This class contains methods for interacting with contract methods
 *
@@ -48,6 +54,9 @@ public class ContractAccountUtil extends GenUtil {
     static final int DEALER_TOKEN_DETAILS = 3;
 
     static final int EXIT_APPLICATION = 0;
+
+    public static final String FUNC_PAUSE = "pause";
+
     private EThaler contract;
 
     /**
@@ -208,7 +217,8 @@ public class ContractAccountUtil extends GenUtil {
             }
         } catch (TransactionException te) {
             printLog("Error in processing Central Banker Options TE: " + te.getMessage() );
-            te.printStackTrace();
+            printLog("The cause is :"  + te.getCause().getMessage());
+            //te.printStackTrace();
         } catch (IOException io) {
             printLog(" Error in processing Central Banker Options IO: " + io.getMessage());
             io.printStackTrace();
@@ -381,16 +391,74 @@ public class ContractAccountUtil extends GenUtil {
      */
     private void pauseToken() throws TransactionException, IOException, Exception {
         String tokenId = this.getUserEnteredTokenId();
-        if (!checkForTokenIdExistance(tokenId)) {
-            System.out.println("Entered token id does not exist");
-        } else {
-            TransactionReceipt receipt = contract.pause(new BigInteger(tokenId)).send();
-            System.out.println("Token id [" + tokenId + "] is paused.");
-            System.out.println("Pause status from contract for token id : [" + tokenId + "] is : [" + contract.isPaused(new BigInteger(tokenId)).send() + "]");
-            printTransactionHash(receipt);
+        try {
+            if (!checkForTokenIdExistance(tokenId)) {
+                System.out.println("Entered token id does not exist");
+            } else {
+                TransactionReceipt receipt = contract.pause(new BigInteger(tokenId)).send();
+                System.out.println("the receipt values : " + receipt.getStatus() + " :: " + receipt.toString() + " :: " + receipt);
+                System.out.println("Token id [" + tokenId + "] is paused.");
+                System.out.println("Pause status from contract for token id : [" + tokenId + "] is : [" + contract.isPaused(new BigInteger(tokenId)).send() + "]");
+                printTransactionHash(receipt);
+            }
+        }
+        catch(Exception te)
+        {
+            //the error is still the generic: Transaction has failed with status: 0x0. Gas used: 25668. (not-enough gas?)
+            final org.web3j.abi.datatypes.Function pauseFunction = new org.web3j.abi.datatypes.Function(
+                    FUNC_PAUSE,
+                    Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(Long.parseLong(tokenId))),
+                    Collections.<TypeReference<?>>emptyList());
+            String encodedFunction = FunctionEncoder.encode(pauseFunction);
+            System.out.println("the acctAddress :" + WalletInitUtil.acctAddress + " :: " + " contractAddress " + contract.getContractAddress());
+            Credentials credentials = Credentials.create(WalletInitUtil.privateKey);
+            TransactionManager rawTransMgr = getRawTransactionManager(web3j , credentials , EThalerApplication.CHAIN_ID , EThalerApplication.POLLING_ATTEMPTS , EThalerApplication.POLLING_INTERVAL);
+            String response = rawTransMgr.sendCall(contract.getContractAddress() , encodedFunction, DefaultBlockParameterName.LATEST);
+            System.out.println("the response code is : " + response);
+            BigInteger weiValue = BigInteger.ZERO;
+           // rawTransMgr.sendTransaction(new BigInteger("0") ,new BigInteger("45000") , contract.getContractAddress() ,
+             //       encodedFunction)
+            EthCall ethCall = web3j.ethCall(
+                    org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction(
+                            WalletInitUtil.acctAddress, // this is your wallet's address. Use `credentials.getAddress();` if you do not know what yours is
+                            contract.getContractAddress(), // this should be the same as what is in the load function above
+                            encodedFunction
+                    ),
+                    DefaultBlockParameterName.LATEST
+            ).send();
+
+            //String errorMethodId = "0x08c379a0" ;
+            String encodedRevertReason = ethCall.getValue() ; //.substring(errorMethodId.length());
+            System.out.println("the error value is : " + encodedRevertReason);
+            List<Type> list = FunctionReturnDecoder.decode(encodedRevertReason, pauseFunction.getOutputParameters());
+            System.out.println("the error value list  : " + list.toString());
+            System.out.println( " the zeroth element is : " + ((Bytes32) list.get(0)).getValue()) ;
+
+            //Optional<String> revertReason = getRevertReason(ethCall); // this is the same function from the blog post mentioned
+            //System.out.println(revertReason.get()); // outputs: 'Already voted.'
         }
     }
+    private String getRevertReason(EthCall ethCall){
+        // Numeric.toHexString(Hash.sha3("Error(string)".getBytes())).substring(0, 10)
+        /*
+        String errorMethodId = "0x08c379a0" ;
+        val revertReasonTypes = listOf<TypeReference<Type<*>>>(TypeReference.create<Type<*>>(AbiTypes.getType("string") as Class<Type<*>>))
 
+        if (!ethCall.hasError() && ethCall.value != null && ethCall.value.startsWith(errorMethodId)) {
+            String encodedRevertReason = ethCall.getValue().substring(errorMethodId.length());
+            val decoded = FunctionReturnDecoder.decode(encodedRevertReason, revertReasonTypes)
+            val decodedRevertReason = decoded[0] as Utf8String
+            return Optional.of(decodedRevertReason.value)
+        }
+        return Optional.empty()
+        */
+        /*
+        String value = ethCall.getValue();
+        List<Type> list = FunctionReturnDecoder.decode(value, function.getOutputParameters());
+        return ((Bytes32) list.get(0)).getValue();
+        */
+        return "";
+    }
     /**
      * resumes a token from pause state
      */

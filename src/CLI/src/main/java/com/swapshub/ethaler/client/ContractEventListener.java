@@ -9,22 +9,15 @@ http://www.apache.org/licenses/LICENSE-2.0
 package com.swapshub.ethaler.client;
 
 import com.swapshub.ethaler.w3generated.EThaler;
-import io.reactivex.Flowable;
-import org.reactivestreams.Subscription;
-import org.web3j.abi.EventEncoder;
 import org.web3j.abi.EventValues;
-import org.web3j.abi.TypeEncoder;
-import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Event;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.Log;
-import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 import java.math.BigInteger;
 import java.util.Hashtable;
-import java.util.List;
 
 /**
 * This class listnes for the event messages broadcast by the network

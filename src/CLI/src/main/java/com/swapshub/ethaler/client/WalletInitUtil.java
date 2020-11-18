@@ -13,7 +13,6 @@ import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.WalletUtils;
 
 import java.io.File;
-import java.util.Scanner;
 
 /**
  * This class helps in opening  wallet file and getting

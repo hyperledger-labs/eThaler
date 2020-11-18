@@ -8,7 +8,9 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 package com.swapshub.ethaler.client;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.util.Arrays;
 
 public class PasswordField {
