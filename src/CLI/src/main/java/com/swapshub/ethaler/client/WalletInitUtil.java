@@ -175,7 +175,7 @@ public class WalletInitUtil extends GenUtil {
             if (fileCount == 0) {
                 return false;
             } else {
-                File walletFile = new File(EThalerApplication.walletDirectory + "\\" + walletFileName);
+                File walletFile = new File(EThalerApplication.walletDirectory + "/" + walletFileName);
                 return walletFile.exists();
             }
         } catch (Exception ex_) {
@@ -202,8 +202,8 @@ public class WalletInitUtil extends GenUtil {
      * @param passwordName_
      */
     private void renameWalletFile(String createdFileName, String passwordName_) {
-        File wFile = new File(EThalerApplication.walletDirectory + "\\" + createdFileName);
-        File pFile = new File(EThalerApplication.walletDirectory + "\\" + passwordName_);
+        File wFile = new File(EThalerApplication.walletDirectory + "/" + createdFileName);
+        File pFile = new File(EThalerApplication.walletDirectory + "/" + passwordName_);
         wFile.renameTo(pFile);
     }
 
