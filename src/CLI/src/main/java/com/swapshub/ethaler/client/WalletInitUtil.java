@@ -175,7 +175,7 @@ public class WalletInitUtil extends GenUtil {
             if (fileCount == 0) {
                 return false;
             } else {
-                File walletFile = new File(EThalerApplication.walletDirectory + "/" + walletFileName);
+                File walletFile = new File(EThalerApplication.walletDirectory +  File.separator + walletFileName);
                 return walletFile.exists();
             }
         } catch (Exception ex_) {
@@ -202,8 +202,8 @@ public class WalletInitUtil extends GenUtil {
      * @param passwordName_
      */
     private void renameWalletFile(String createdFileName, String passwordName_) {
-        File wFile = new File(EThalerApplication.walletDirectory + "/" + createdFileName);
-        File pFile = new File(EThalerApplication.walletDirectory + "/" + passwordName_);
+        File wFile = new File(EThalerApplication.walletDirectory +  File.separator + createdFileName);
+        File pFile = new File(EThalerApplication.walletDirectory +  File.separator + passwordName_);
         wFile.renameTo(pFile);
     }
 
@@ -220,7 +220,7 @@ public class WalletInitUtil extends GenUtil {
             String walletName = WalletUtils.generateWalletFile(password_, keyPair, new File(EThalerApplication.walletDirectory), false);
             String walFileName = addFileExtension(walletFileName);
             renameWalletFile(walletName, walFileName);
-            Credentials credentials = WalletUtils.loadCredentials(password_, EThalerApplication.walletDirectory + "/" + walFileName);
+            Credentials credentials = WalletUtils.loadCredentials(password_, EThalerApplication.walletDirectory +  File.separator + walFileName);
             acctAddress = credentials.getAddress();
             printLog("New Account address: " + acctAddress + "Note this account address to give to other dealers");
             privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
@@ -239,7 +239,7 @@ public class WalletInitUtil extends GenUtil {
             String walletName = WalletUtils.generateNewWalletFile(password_, new File(EThalerApplication.walletDirectory));
             String walFileName = addFileExtension(walletFileName);
             renameWalletFile(walletName, walFileName);
-            Credentials credentials = WalletUtils.loadCredentials(password_, EThalerApplication.walletDirectory + "/" + walFileName);
+            Credentials credentials = WalletUtils.loadCredentials(password_, EThalerApplication.walletDirectory + File.separator + walFileName);
             acctAddress = credentials.getAddress();
             printLog("New Account address: " + acctAddress + "\r\n");
             privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
@@ -257,7 +257,7 @@ public class WalletInitUtil extends GenUtil {
         try {
             String walletName = addFileExtension(walletFileName);
             // Load the JSON encryted wallet
-            Credentials credentials = WalletUtils.loadCredentials(password_, EThalerApplication.walletDirectory + "/" + walletName);
+            Credentials credentials = WalletUtils.loadCredentials(password_, EThalerApplication.walletDirectory +  File.separator + walletName);
             // Get the account address
             acctAddress = credentials.getAddress();
             // Get the unencrypted private key into hexadecimal
